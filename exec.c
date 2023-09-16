@@ -11,9 +11,9 @@
 void run_command(int c, char **v, pid_t pid, char **tokens)
 {
 
-	if(pid == 0)
-	{	
-		if(execve(tokens[0], tokens, NULL) == -1)
+	if (pid == 0)
+	{
+		if (execve(tokens[0], tokens, NULL) == -1)
 		{
 			perror(v[0]);
 		}

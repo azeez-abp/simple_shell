@@ -3,17 +3,21 @@
  * get_env - output env
  */
 
-void get_env()
+void get_env(void)
 {
 	char **env;
 	int index;
+	char *current;
+	int i;
+
 	index = 0;
 	env = environ;
 
 	while (env[index] != NULL)
 	{
-		char *current = env[index];
-		int i = 0;
+
+		current = env[index];
+		i = 0;
 		while (current[i] != '\0')
 		{
 			write(1, &current[i], 1);
