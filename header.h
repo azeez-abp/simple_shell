@@ -19,6 +19,7 @@ void run_command(int c, char **v, pid_t pid, char **tokens);
 int shell(int c, char **v);
 int shell2(int c, char **v);
 ssize_t _getline(char **lineptr, size_t *n);
+ char *_strtok(char *str, const char *delim);
 #endif
 
 

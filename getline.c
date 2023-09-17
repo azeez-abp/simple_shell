@@ -1,25 +1,31 @@
 #include "header.h"
 /**
- * _getline - read line of input
- * @lineptr: 
- */
+* _getline - read line of input
+* @lineptr: pointer to the string
+* @n: size  of char read
+* Return: size of character;
+*/
 ssize_t _getline(char **lineptr, size_t *n)
 {
-	static char buffer[MAX_BUFFER_SIZE];
-	static int buffer_pos = 0;
-	static int bytes_read = 0;
+	static char buffer[BUFFER_SIZE];
+	static int buffer_pos;
+	static int bytes_read;
+	char *line;
+
+	buffer_pos = 0;
+	bytes_read = 0;
 
 	if (buffer_pos >= bytes_read)
 	{
-		bytes_read = read(STDIN_FILENO, buffer, MAX_BUFFER_SIZE);
+		bytes_read = read(STDIN_FILENO, buffer, BUFFER_SIZE);
 		if (bytes_read <= 0)
 		{
-			return -1; // End of input or error
+			return (-1);
 		}
 		buffer_pos = 0;
 	}
 
-	char *line = &buffer[buffer_pos];
+	line = &buffer[buffer_pos];
 	while (buffer_pos < bytes_read && buffer[buffer_pos] != '\n')
 	{
 		buffer_pos++;
@@ -29,5 +35,5 @@ ssize_t _getline(char **lineptr, size_t *n)
 	*lineptr = line;
 	*n = buffer_pos;
 
-	return *n;
+	return (*n);
 }

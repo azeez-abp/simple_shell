@@ -7,11 +7,13 @@
  */
 char *get_input(void)
 {
-	char *input = NULL;
-	size_t input_size = 0;
+	char *input;
+	size_t input_size;
 	ssize_t input_size_read;
 
-	input_size_read = getline(&input, &input_size, stdin);
+	input = NULL;
+	input_size = 0;
+	input_size_read = _getline(&input, &input_size);
 
 	input[input_size_read - 1] = '\0';
 	return (input);
@@ -62,16 +64,18 @@ char *_strncpy(char *dest, char *src, int n)
  */
 char **input_to_array(char *inputs)
 {
-	char **tokens = malloc(sizeof(char *) * MAX_INPUT_SIZE);
-	unsigned int token_count = 0;
+	char **tokens;
+	unsigned int token_count;
+	char *token;
 
-	char *token = strtok(inputs, " ")
-		;
+	token_count = 0;
+	tokens  = (char **) malloc(sizeof(char *) * MAX_INPUT_SIZE);
+	token = _strtok(inputs, " ");
 	while (token != NULL)
 	{
 		tokens[token_count] = malloc(_strlen(token) + 1);
 		_strncpy(tokens[token_count++], token, _strlen(token) + 1);
-		token = strtok(NULL, " ");
+		token = _strtok(NULL, " ");
 	}
 
 	tokens[token_count] = NULL;
@@ -106,11 +110,10 @@ int shell2(int c, char **v)
 			tokens[0] = concat("/bin/", tokens[0]);
 		pid = fork();
 		run_command(c, v, pid, tokens);
-		
-		if(!isatty(STDIN_FILENO))
+
+		if (!isatty(STDIN_FILENO))
 			break;
 	}
 	free(tokens);
-	free(input);
 	return (0);
 }
