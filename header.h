@@ -20,6 +20,8 @@ int shell(int c, char **v);
 int shell2(int c, char **v);
 ssize_t _getline(char **lineptr, size_t *n);
  char *_strtok(char *str, const char *delim);
+ char *_strncpy(char *dest, char *src, int n);
+ int _strlen(char *s);
 #endif
 
 
