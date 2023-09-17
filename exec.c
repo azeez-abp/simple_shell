@@ -8,10 +8,8 @@
  *
  * This function runs commad
  */
-void run_command(int c, char **v, pid_t pid, char **tokens)
+void run_command(int  __attribute__((__unused__))  c, char **v, pid_t pid, char **tokens)
 {
-	if (c == 0)
-		c = 0;	
 
 	if (pid == 0)
 	{
