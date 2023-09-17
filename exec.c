@@ -10,6 +10,8 @@
  */
 void run_command(int c, char **v, pid_t pid, char **tokens)
 {
+	if (c == 0)
+		c = 0;	
 
 	if (pid == 0)
 	{
