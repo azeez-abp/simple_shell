@@ -16,7 +16,8 @@ void run_command(int c, char **v, pid_t pid, char **tokens)
 		if (execve(tokens[0], tokens, NULL) == -1)
 		{
 			perror(v[0]);
-		}
+		};
+
 	}
 	else if (pid > 0)
 	{
