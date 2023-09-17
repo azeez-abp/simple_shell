@@ -18,6 +18,7 @@ int streql(char  *str1, char *str2);
 void run_command(int c, char **v, pid_t pid, char **tokens);
 int shell(int c, char **v);
 int shell2(int c, char **v);
+ssize_t _getline(char **lineptr, size_t *n);
 #endif
 
 
