@@ -19,9 +19,16 @@ void run_command(int c, char **v, pid_t pid, char **tokens);
 int shell(int c, char **v);
 int shell2(int c, char **v);
 ssize_t _getline(char **lineptr, size_t *n);
- char *_strtok(char *str, const char *delim);
- char *_strncpy(char *dest, char *src, int n);
- int _strlen(char *s);
+char *_strtok(char *str, const char *delim);
+char *_strncpy(char *dest, char *src, int n);
+int _strlen(char *s);
+char *_strcat(char *dest, const char *src);
+char *_strcpy(char *dest, const char *src);
+int _setenv(char *key, char *val);
+int _unsetenv(char *key);
+int _strncmp(const char *s1, const char *s2, size_t n);
+int  setenvfunc(char *key, char *val);
+void unsetenvfunc(char *key);
 #endif
 
 

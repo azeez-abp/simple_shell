@@ -33,6 +33,11 @@ char **input_to_array(char *inputs)
 
 	token_count = 0;
 	tokens  = (char **) malloc(sizeof(char *) * MAX_INPUT_SIZE);
+	if (tokens == NULL)
+	{
+		printf("Error in input_to_array\n");
+		exit(-1);
+	}
 	token = _strtok(inputs, " ");
 	while (token != NULL)
 	{
@@ -44,6 +49,7 @@ char **input_to_array(char *inputs)
 	tokens[token_count] = NULL;
 	return (tokens);
 }
+
 /**
  * shell2 - print prompt and take user input
  * @c: arg count
@@ -61,22 +67,39 @@ int shell2(int c, char **v)
 		write(1, PROMPT, 2);
 		input  = get_input();
 		tokens  = input_to_array(input);
+		if (tokens) 
+		{
+			if (_strlen(input) == 0 || _strlen(input) == 1)
+				continue;
+			check_env(tokens[0]);
 
-		if (_strlen(input) == 0 || _strlen(input)  == 1)
-			continue;
-
-		check_env(tokens[0]);
-		if (streql(tokens[0], "exit") == 1)
-			break;
-
-		if (str_search("/bin/", tokens[0]) == 0)
-			tokens[0] = concat("/bin/", tokens[0]);
-		pid = fork();
-		run_command(c, v, pid, tokens);
-
-		if (!isatty(STDIN_FILENO))
-			break;
+			if ( streql("setenv", tokens[0]) == 1)
+			{
+				setenvfunc(tokens[1], tokens[2]);
+				free(tokens);
+				continue;
+			}
+			else if (streql("unsetenv", tokens[0]) == 1)
+			{
+				unsetenvfunc(tokens[1]);
+				continue;
+			}
+			if (!isatty(STDIN_FILENO))
+			{
+				break;
+			}
+			else
+			{
+			if (streql(tokens[0], "exit") == 1)
+				break;
+			if (str_search("/bin/", tokens[0]) == 0)
+			    	tokens[0] = concat("/bin/", tokens[0]);
+			pid = fork();
+			run_command(c, v, pid, tokens);
+			}
+			free(tokens);
+		}
 	}
-	free(tokens);
+	
 	return (0);
 }
