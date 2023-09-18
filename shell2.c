@@ -84,10 +84,6 @@ int shell2(int c, char **v)
 				unsetenvfunc(tokens[1]);
 				continue;
 			}
-			if (!isatty(STDIN_FILENO))
-			{
-				break;
-			}
 			else
 			{
 			if (streql(tokens[0], "exit") == 1)
@@ -96,6 +92,8 @@ int shell2(int c, char **v)
 			    	tokens[0] = concat("/bin/", tokens[0]);
 			pid = fork();
 			run_command(c, v, pid, tokens);
+			if (!isatty(STDIN_FILENO))
+				break;
 			}
 			free(tokens);
 		}
