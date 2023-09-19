@@ -74,7 +74,9 @@ int shell2(int c, char **v)
 			check_env(tokens[0]);
 
 			if ( streql("setenv", tokens[0]) == 1)
-			{
+			{       
+				if(!tokens[1] || !tokens[2])
+					continue;
 				setenvfunc(tokens[1], tokens[2]);
 				free(tokens);
 				continue;
@@ -84,10 +86,22 @@ int shell2(int c, char **v)
 				unsetenvfunc(tokens[1]);
 				continue;
 			}
+			else if (streql("cd", tokens[0]) == 1)
+			{
+				printf("dsfdf");
+		       		_cd(tokens);
+			}
 			else
 			{
 			if (streql(tokens[0], "exit") == 1)
-				break;
+			{
+				if(tokens[1])
+				{
+					 exit((int) (*tokens[1]));
+				}
+				else
+					exit(0);
+			}
 			if (str_search("/bin/", tokens[0]) == 0)
 			    	tokens[0] = concat("/bin/", tokens[0]);
 			pid = fork();

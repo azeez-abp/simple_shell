@@ -88,8 +88,6 @@ int _setenv(char *key, char *val)
 	env_var = _getenv(key);
 	if (env_var)
 	{
-		free(*env_var);
-		*env_var = new_value;
 		return (0);
 	}
 	for (size = 0; environ[size]; size++)
@@ -109,7 +107,6 @@ int _setenv(char *key, char *val)
 	environ = new_environ;
 	environ[index] = new_value;
 	environ[index + 1] = NULL;
-
 	return (0);
 }
 

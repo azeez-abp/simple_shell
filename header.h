@@ -6,6 +6,7 @@
 #include <string.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <sys/stat.h>
 
 #define BUFFER_SIZE 1024
 #define PROMPT "$ "
@@ -24,11 +25,13 @@ char *_strncpy(char *dest, char *src, int n);
 int _strlen(char *s);
 char *_strcat(char *dest, const char *src);
 char *_strcpy(char *dest, const char *src);
+char **_getenv(char *str);
 int _setenv(char *key, char *val);
 int _unsetenv(char *key);
 int _strncmp(const char *s1, const char *s2, size_t n);
 int  setenvfunc(char *key, char *val);
 void unsetenvfunc(char *key);
+int _cd(char **args);
 #endif
 
 
