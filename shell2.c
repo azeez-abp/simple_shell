@@ -30,12 +30,13 @@ char **input_to_array(char *inputs)
 	char **tokens;
 	unsigned int token_count;
 	char *token;
-
+	char *err_msg;
+	err_msg  = "Error in input_to_array\n";
 	token_count = 0;
 	tokens  = (char **) malloc(sizeof(char *) * MAX_INPUT_SIZE);
 	if (tokens == NULL)
 	{
-		printf("Error in input_to_array\n");
+		write(1, err_msg, _strlen(err_msg));
 		exit(-1);
 	}
 	token = _strtok(inputs, " ");
@@ -57,24 +58,21 @@ char **input_to_array(char *inputs)
  * @v: args value 
  * @input: string read from stdinp and converted tokens
  */
-void execution(int c, char **v, char **token)
+void execution(int c, char **v, char **tokens)
 {
+	pid_t pid;
+
 	if (tokens)
 	{
 		check_env(tokens[0]);
 
 		if (streql("setenv", tokens[0]) == 1)
 		{
-			if (!tokens[1] || !tokens[2])
-				continue;
 			setenvfunc(tokens[1], tokens[2]);
-			free(tokens);
-			continue;
 		}
 		else if (streql("unsetenv", tokens[0]) == 1)
 		{
 			unsetenvfunc(tokens[1]);
-			continue;
 		}
 		else if (streql("cd", tokens[0]) == 1)
 		{
@@ -97,7 +95,7 @@ void execution(int c, char **v, char **token)
 			pid = fork();
 			run_command(c, v, pid, tokens);
 			if (!isatty(STDIN_FILENO))
-				break;
+				exit(0);
 		}
 		free(tokens);
 	}
@@ -112,7 +110,6 @@ int shell2(int c, char **v)
 {
 	char *input;
 	char **tokens;
-	pid_t pid;
 
 	while (1)
 	{
@@ -121,7 +118,7 @@ int shell2(int c, char **v)
 
 		if (_strlen(input) == 0 || _strlen(input) == 1)
 			continue;
-
+		
 		tokens  = input_to_array(input);
 
 		execution(c, v, tokens);
