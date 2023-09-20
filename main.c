@@ -8,6 +8,9 @@
 
 int main(int c, char **v)
 {	
+	if (c == 2)
+		readfile(v[1]);
+	else
 	shell2(c, v);
 	return (0);
 }

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+ls -map
+ls-al
+pwd
+whoami

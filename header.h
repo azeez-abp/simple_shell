@@ -7,6 +7,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <sys/stat.h>
+#include <fcntl.h>
 
 #define BUFFER_SIZE 1024
 #define PROMPT "$ "
@@ -32,6 +33,7 @@ int _strncmp(const char *s1, const char *s2, size_t n);
 int  setenvfunc(char *key, char *val);
 void unsetenvfunc(char *key);
 int _cd(char **args);
+int readfile(char *path);
 #endif
 
 
