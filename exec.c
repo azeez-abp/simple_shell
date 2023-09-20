@@ -13,7 +13,7 @@ void run_command(int  __attribute__((__unused__))  c, char **v, pid_t pid, char 
 
 	if (pid == 0)
 	{
-		if (execve(tokens[0], tokens, NULL) == -1)
+		if (execve(tokens[0], tokens,environ) == -1)
 		{
 			perror(v[0]);
 		};
