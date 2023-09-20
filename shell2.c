@@ -51,6 +51,58 @@ char **input_to_array(char *inputs)
 }
 
 /**
+ * execution - run the code
+ * @token: array string
+ * @c: arg count
+ * @v: args value 
+ * @input: string read from stdinp and converted tokens
+ */
+void execution(int c, char **v, char **token)
+{
+	if (tokens)
+	{
+		check_env(tokens[0]);
+
+		if (streql("setenv", tokens[0]) == 1)
+		{
+			if (!tokens[1] || !tokens[2])
+				continue;
+			setenvfunc(tokens[1], tokens[2]);
+			free(tokens);
+			continue;
+		}
+		else if (streql("unsetenv", tokens[0]) == 1)
+		{
+			unsetenvfunc(tokens[1]);
+			continue;
+		}
+		else if (streql("cd", tokens[0]) == 1)
+		{
+
+			_cd(tokens);
+		}
+		else
+		{
+			if (streql(tokens[0], "exit") == 1)
+			{
+				if (tokens[1])
+				{
+					exit((int)(*tokens[1]));
+				}
+				else
+					exit(0);
+			}
+			if (str_search("/bin/", tokens[0]) == 0)
+				tokens[0] = concat("/bin/", tokens[0]);
+			pid = fork();
+			run_command(c, v, pid, tokens);
+			if (!isatty(STDIN_FILENO))
+				break;
+		}
+		free(tokens);
+	}
+}
+/**
  * shell2 - print prompt and take user input
  * @c: arg count
  * @v: arg va;
@@ -66,51 +118,14 @@ int shell2(int c, char **v)
 	{
 		write(1, PROMPT, 2);
 		input  = get_input();
-		tokens  = input_to_array(input);
-		if (tokens) 
-		{
-			if (_strlen(input) == 0 || _strlen(input) == 1)
-				continue;
-			check_env(tokens[0]);
 
-			if ( streql("setenv", tokens[0]) == 1)
-			{       
-				if(!tokens[1] || !tokens[2])
-					continue;
-				setenvfunc(tokens[1], tokens[2]);
-				free(tokens);
-				continue;
-			}
-			else if (streql("unsetenv", tokens[0]) == 1)
-			{
-				unsetenvfunc(tokens[1]);
-				continue;
-			}
-			else if (streql("cd", tokens[0]) == 1)
-			{
-				printf("dsfdf");
-		       		_cd(tokens);
-			}
-			else
-			{
-			if (streql(tokens[0], "exit") == 1)
-			{
-				if(tokens[1])
-				{
-					 exit((int) (*tokens[1]));
-				}
-				else
-					exit(0);
-			}
-			if (str_search("/bin/", tokens[0]) == 0)
-			    	tokens[0] = concat("/bin/", tokens[0]);
-			pid = fork();
-			run_command(c, v, pid, tokens);
-			if (!isatty(STDIN_FILENO))
-				break;
-			}
-			free(tokens);
-		}
+		if (_strlen(input) == 0 || _strlen(input) == 1)
+			continue;
+
+		tokens  = input_to_array(input);
+
+		execution(c, v, tokens);
+
 	}
 	
 	return (0);
