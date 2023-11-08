@@ -2,7 +2,7 @@
 
 ## Contriutors
 
-- [**Azeez Adio**](https://github.com/azeez-abp/simple_shell) And [**Egodimpa**)](https://github.com/sanipop)
+- [**Azeez Adio**](https://github.com/azeez-abp/simple_shell) And [**Egodimpa**)](https://github.com/wetPaint99)
 
 ## Description
 
