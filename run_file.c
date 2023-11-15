@@ -52,8 +52,7 @@ int readfile(char *path)
 		exit(EXIT_FAILURE);
 	}
 
-	do
-	{
+	do {
 		bytes_read = read(file_descriptor, line, sizeof(line));
 
 		if (bytes_read > 0)
@@ -66,5 +65,6 @@ int readfile(char *path)
 	} while (bytes_read > 0);
 
 	close(file_descriptor);
+
 	return (0);
 }
