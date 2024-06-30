@@ -1,6 +1,6 @@
 # 0x16. C - Simple Shell Project
 
-## Contriutors
+## Contributors
 
 - [**Azeez Adio**](https://github.com/azeez-abp/simple_shell) And [**Egodimpa**](https://github.com/wetPaint99)
 
